@@ -6,9 +6,10 @@ const RandomMaker = {
   },
 
   menu(menuList) {
-    const list = menuList.map((_, index) => index);
+    const list = menuList.map((_, index) => index + 1);
     const num = Random.shuffle(list)[0];
-    return menuList[num];
+    // console.log('num : ', num);
+    return menuList[num - 1];
   },
 };
 

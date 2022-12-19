@@ -27,6 +27,7 @@ class Coach {
   setDailyMenu(menuList, randomMenuMaker) {
     const menu = randomMenuMaker(menuList);
     if (!this.isAvoidMenu(menu) && !this.isExistMenu(menu)) {
+      // console.log('menu : ', menu);
       return this.#dailyMenu.push(menu);
     }
     this.setDailyMenu(menuList, randomMenuMaker);
