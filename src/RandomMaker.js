@@ -1,4 +1,4 @@
-const { Random } = require('@woowacourse/mission-utils');
+const { Random, Console } = require('@woowacourse/mission-utils');
 
 const RandomMaker = {
   category() {
@@ -8,7 +8,8 @@ const RandomMaker = {
   menu(menuList) {
     const list = menuList.map((_, index) => index + 1);
     const num = Random.shuffle(list)[0];
-    // console.log('num : ', num);
+    // Console.print(`Randomnum : ${num}`);
+    // Console.print(`Menu : ${menuList[num - 1]}`);
     return menuList[num - 1];
   },
 };

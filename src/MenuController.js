@@ -34,23 +34,30 @@ class MenuController {
       validateAvoidMenu(avoidMenu);
       this.coachList[this.setCoachCount - 1].setAvoidMenu(avoidMenu);
     }
-    if (this.setCoachCount === this.coachList.length - 1) return this.recommandMenu();
+    if (this.setCoachCount === this.coachList.length) return this.recommandMenu();
     InputView.readAvoidMenu(this.coachList[this.setCoachCount++].name, this.setAvoids.bind(this));
   }
 
   recommandMenu() {
-    DAYS.forEach(() => {
-      const menuList = this.category.getMenuList();
-      const randomCategory = this.category.pickValidCategory(RandomMaker.category);
-      this.saveCategory.push(menuList[randomCategory].name);
-      this.pickMenu(menuList[randomCategory].list);
-    });
+    this.pickCategory();
+    this.pickMenu();
     this.result();
   }
 
-  pickMenu(menuList) {
+  pickCategory() {
+    DAYS.forEach(() => {
+      const categoryList = this.category.getCategoryList();
+      const randomCategory = this.category.pickValidCategory(RandomMaker.category);
+      this.saveCategory.push(categoryList[randomCategory].name);
+    });
+  }
+
+  pickMenu() {
     this.coachList.forEach((coach) => {
-      coach.setDailyMenu(menuList, RandomMaker.menu);
+      DAYS.forEach((_, index) => {
+        const curMenuList = this.category.getMenuList(this.saveCategory[index]);
+        coach.setDailyMenu(curMenuList, RandomMaker.menu);
+      });
     });
   }
 

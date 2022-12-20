@@ -2,26 +2,34 @@ const Menu = require('./Menu');
 const { CATEGORY } = require('./Constants');
 
 class Category {
-  #menuList = [];
+  #categoryList = [];
 
   constructor(sampleMenu) {
-    this.#menuList = CATEGORY.map((category) => new Menu(category));
-    this.#menuList.forEach((menu) => {
+    this.#categoryList = CATEGORY.map((category) => new Menu(category));
+    this.#categoryList.forEach((menu) => {
       menu.setList(sampleMenu[menu.name]);
     });
   }
 
-  getMenuList() {
-    return this.#menuList;
+  getCategoryList() {
+    return this.#categoryList;
+  }
+
+  getMenuList(category) {
+    let menuList;
+    this.#categoryList.forEach((cur) => {
+      if (category === cur.name) menuList = cur.list;
+    });
+    return menuList;
   }
 
   pickValidCategory(randomCategoryMaker) {
     const category = randomCategoryMaker();
-    if (Category.isValidCategory(this.#menuList[category])) {
-      this.#menuList[category].count += 1;
+    if (Category.isValidCategory(this.#categoryList[category])) {
+      this.#categoryList[category].count += 1;
       return category;
     }
-    this.pickVaildCategory(randomCategoryMaker);
+    this.pickValidCategory(randomCategoryMaker);
   }
 
   static isValidCategory(category) {
